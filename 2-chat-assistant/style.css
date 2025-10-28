@@ -35,13 +35,14 @@
         p {
             border-radius: 20px;
             width: 80%;
+            margin: 8px 0;
             font-size: 16px;
+            padding: 16px;
         }
 
         div.model {
             p {
                 background-color: var(--grey);
-                padding: 16px;
             }
         }
 
@@ -51,8 +52,13 @@
             p {
                 background-color: var(--blue);
                 color: #ffffff;
-                padding: 16px;
             }
+        }
+
+        div.error {
+            font-size: 14px;
+            text-align: center;
+            color: red;
         }
     }
 
