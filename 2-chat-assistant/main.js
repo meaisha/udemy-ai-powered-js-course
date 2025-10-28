@@ -117,7 +117,10 @@ async function sendMessage() {
             document.querySelector(".chat-window input").value = "";
             document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend", `<div class="user">
                     <p>${userMessage}</p>
-                </div>`)
+                </div>`);
+
+            document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend", `<div class="loader"></div>`);
+            
         }
 
         const chat = model.startChat(messages);
@@ -139,6 +142,8 @@ async function sendMessage() {
             <p>The message could not be sent. Please try again.</p>
         </div>`);
     }
+
+    document.querySelector(".chat-window .chat .loader").remove();
 
     
    
