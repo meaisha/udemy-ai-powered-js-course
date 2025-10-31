@@ -124,11 +124,20 @@ async function sendMessage() {
         }
 
         const chat = model.startChat(messages);
-        const result = await chat.sendMessage(userMessage);
+
+        let result = await chat.sendMessageStream(userMessage);
+
         document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend", `<div class="model">
-            <p>${result.response.text()}</p>
+            <p></p>
         </div>`);
-        
+
+        for await (const chunk of result.stream) {
+            const chunkText = chunk.text();
+            let modelMessages = document.querySelectorAll(".chat-window .chat div.model");
+            modelMessages[modelMessages.length - 1].querySelector("p").insertAdjacentHTML("beforeend", `${chunkText}`);
+        }
+
+        /*
         messages.history.push({
             role: "user",
             parts: [{text: userMessage}],
@@ -136,7 +145,7 @@ async function sendMessage() {
         messages.history.push({
             role: "model",
             parts: [{text: result.response.text()}],
-        });
+        });*/
     } catch(error) {
         document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend", `<div class="error">
             <p>The message could not be sent. Please try again.</p>
