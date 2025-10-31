@@ -130,22 +130,14 @@ async function sendMessage() {
         document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend", `<div class="model">
             <p></p>
         </div>`);
-
+        let modelMessages;
         for await (const chunk of result.stream) {
             const chunkText = chunk.text();
-            let modelMessages = document.querySelectorAll(".chat-window .chat div.model");
+            modelMessages = document.querySelectorAll(".chat-window .chat div.model");
             modelMessages[modelMessages.length - 1].querySelector("p").insertAdjacentHTML("beforeend", `${chunkText}`);
         }
 
-        /*
-        messages.history.push({
-            role: "user",
-            parts: [{text: userMessage}],
-        });
-        messages.history.push({
-            role: "model",
-            parts: [{text: result.response.text()}],
-        });*/
+        console.log(messages.history);
     } catch(error) {
         document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend", `<div class="error">
             <p>The message could not be sent. Please try again.</p>
@@ -160,3 +152,11 @@ async function sendMessage() {
 }
 
 document.querySelector(".chat-window .input-area button").addEventListener("click", () => sendMessage());
+
+document.querySelector(".chat-button").addEventListener("click", () => {
+    document.querySelector("body").classList.add("chat-open");
+});
+
+document.querySelector(".chat-window button.close ").addEventListener("click", () => {
+    document.querySelector("body").classList.remove("chat-open");
+});
